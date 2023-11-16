@@ -1,0 +1,140 @@
+
+EJERCICIO 1
+Se escribe printenv y se visualizan las siguientes variables de entorno:
+-USER=maria
+-SHLVL=1
+-PAPERSIZE=a4
+-VTE_VERSION=6800
+-XDG_SESSION_CLASS=user
+
+
+EJERCICIO 2
+La ejecución "NOMBRE=FS" declara una variable de entorno nueva con el valor FS
+Al poner "echo $NOMBRE" se muestra el valor que tiene la variable NOMBRE 
+AL poner "bash" se quiere que se ejecute una instancia actual
+Por ultimo se vuelve a enseñar el valor de la variable y no sale nada debido a que el valor de la variable se ha borrado.
+
+Para que el valor de la variable NOMBRE se guarde en el shell hijo se debería de exportar esta misma a el shell que se requiere con el comando "export NOMBRE" así se podrá utilizar fuera del shell actual.Es decir que al hacer este comando antes del "bash" el valor de NUMERO se guardará y al mostrarlo saldrá FS.
+
+
+EJERCICIO 3
+Si se ponen las comillas al final después de : tal que así "`ls -l`" funciona de la misma manera que en el ejemplo.De hecho si no se le ponen comilla dobles funciona bien pero sin espaciados, es un caos pero funciona.
+Al sustituir las comillas dobles por simples la terminal lo detecta todo como texto y no ejecuta la orden ls -l ya que las comillas simples hacen que esto se lea como texto y no como orden.
+
+
+EJERCICIO 4
+Al hacer "numero=$numero+1" no se detecta el valor de numero porque no tiene por eso devuelve el +1 al enseñar su valor con "echo", como la misma variable numero no tiene ningún valor y al ponerlo pegado a +1 se le detecta como parte del valor (como caracter) y no una operación por eso se devuelve solo eso.
+
+EJERCICIO 5
+Se crea con el comando nano el documento "hola" que pide el nombre del usuario y le dice hola tal que asi:
+#!\bin\bash
+echo "Hola "$1
+Mediante el comando bash se ejecuta. Así al escribir "bash archivo.sh maria" devolverá "Hola maria"
+
+EJERCICIO 6
+Se crea un documento con el comando nano y se le llama "lista". Se hace el código tal que así:
+#!\bin\bash
+echo "Nombres: "$1 $2 $3 $4 $5 $6 $7 $8
+Mediante el comando bash se ejecuta. Así al escribir "bash archivo.sh maria ana alejandro pedro paca" devolverá Nombres: maria ana alejandro pedro paca
+
+EJERCICIO 7
+Se crean las variables mediante VAR1="hola", VAR2="adios" y VAR3="14" con export para que no se borre el valor.
+
+a) Se ejecuta el siguiente comando --> echo $VAR1 $VAR2 $VAR3 .Y se muestra lo requerido. 
+
+b) Al haber realizado el export se pueden ver desde cualquier lugar del directorio, aunque al haberlas creado en el directorio serán variables locales. De todas formas se utiliza el comando set para comprobarlo y efectivamente salen al escribirlo.
+
+c) Se utiliza el comando unset VAR2 y se comprueba si esta con echo y efectivamente no existe.
+
+d) No se pueden visualizar al abrir otra terminal ya que son locales.
+
+e) Se ejecuta el comando declare -a VAR=("hola" "adios" "14") y se muestra con echo para ver que se ha declarado perfectamente como vector.
+
+f) Para leerlo se ejecuta el comando echo ${VAR[1]} Se pone uno porque el cero lo cuenta, es decir que para leer la segunda variable se necesita restar uno al numero de la variable que queremos mostrar.
+
+EJERCICIO 8
+Se declara una variable ne que contendrá ls. para mostrar los archivos del directorio actual. Se escribe tal que así ne=`ls .` ,para hacer lo mismo pero en el directorio homa y el usuario que lo ejecuta deberemos primero exportar la variable con export ne para poder leerlo en home y se ejecutará el siguiente comando echo $ne (todo esto si ya desde un pricipio en el usuario ha sido declarada inicialmente la varible en sí)
+
+EJERCICIO 9
+Se ejecuta el comando find -size 1 y muestra todos los archivos del directorio home que ocupan solo un bloque. Para crear un archivo que contenga esto se realizará el siguiente comando find -size 1 > archivosP
+
+EJERCICIO 10
+Par buscar en la terminal archivos que contengan la palabra ejemplo debemos ejecutar la siguiente orden: grep ejemplo *. 
+
+EJERCICIO 11
+Para la orden find se pueden destacar las siguientes opciones:
+       -P    Never  follow  symbolic  links.   This is the default behaviour.
+              When find examines or prints information about  files,  and  the
+              file  is  a  symbolic  link, the information used shall be taken
+              from the properties of the symbolic link itself.
+
+       -L     Follow symbolic links.  When find examines or prints information
+              about  files, the information used shall be taken from the prop‐
+              erties of the file to which the link points, not from  the  link
+              itself (unless it is a broken symbolic link or find is unable to
+              examine the file to which the link points).  Use of this  option
+              implies  -noleaf.   If you later use the -P option, -noleaf will
+              still be in effect.  If -L is in effect  and  find  discovers  a
+              symbolic link to a subdirectory during its search, the subdirec‐
+              tory pointed to by the symbolic link will be searched.
+              
+              When the -L option is in effect, the -type predicate will always
+              match  against  the type of the file that a symbolic link points
+              to rather than the link itself (unless the symbolic link is bro‐
+              ken).   Actions  that  can cause symbolic links to become broken
+              while find is executing (for example -delete) can give  rise  to
+              confusing  behaviour.   Using  -L  causes the -lname and -ilname
+              predicates always to return false.
+
+       -H     Do not follow symbolic links, except while processing  the  com‐
+              mand  line  arguments.  When find examines or prints information
+              about files, the information used shall be taken from the  prop‐
+              erties  of the symbolic link itself.  The only exception to this
+              behaviour is when a file specified on the command line is a sym‐
+              bolic  link,  and the link can be resolved.  For that situation,
+              the information used is taken from whatever the link  points  to
+              (that is, the link is followed).  The information about the link
+              itself is used as a fallback if the file pointed to by the  sym‐
+              bolic  link  cannot  be examined.If -H is in effect and one of
+              the paths specified on the command line is a symbolic link to  a
+              directory,  the  contents  of  that  directory  will be examined
+              (though of course -maxdepth 0 would prevent this).
+              
+Para grep se puede destacar:
+Pattern Syntax
+       -E, --extended-regexp
+              Interpret PATTERNS as extended regular  expressions  (EREs,  see
+              below).
+
+       -F, --fixed-strings
+              Interpret PATTERNS as fixed strings, not regular expressions.
+
+       -G, --basic-regexp
+              Interpret  PATTERNS  as  basic  regular  expressions  (BREs, see
+              below).  This is the default.
+
+       -P, --perl-regexp
+              Interpret I<PATTERNS>  as  Perl-compatible  regular  expressions
+              (PCREs).   This option is experimental when combined with the -z
+              (--null-data) option, and grep  -P  may  warn  of  unimplemented
+              features.
+
+EJERCICIO 12
+Para buscar si un usuario dispone de una cuenta en el sistema se ejecutará el siguiente comando: grep maria * en la terminal desde el directorio /home.
+
+EJERCICIO 13
+Para realizar esto debemos ejecutar el siguiente comando: find ~ ! -perm -o+r | wc -l y se devolverá el número de ficheros de la cuenta de usuario en la que nos encontremos en caso de mi cuenta son: 3105.
+
+ 
+EJERCICIO 14
+Se crea un documento con el comando nano y se le llama "numE.sh". Se hace el código tal que así:
+#!\bin\bash
+ls $1 | wc -l
+Mediante el comando bash se ejecuta. Así al escribir "bash numE.sh " devolverá el numero de los directorios de donde se encuentre en ese momento.
+
+
+
+
+
+	
+
